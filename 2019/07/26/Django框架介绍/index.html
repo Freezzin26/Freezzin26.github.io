@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="一、模型层(models)(一)模型类的定义 类属性命名限制  不能是python的保留关键字 不允许使用连续的下划线 定义属性时需要指定字段类型，通过字段类型的参数指定选项   常用字段类型：    类型 描述    AutoField 自动增长的IntegerField，通常不用指定   BooleanField 布尔字段，值为True或False   NullBooleanField 支持N">
+<meta name="keywords" content="python,Django,后端开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django框架介绍">
+<meta property="og:url" content="http://yoursite.com/2019/07/26/Django框架介绍/index.html">
+<meta property="og:site_name" content="Freezz的博客">
+<meta property="og:description" content="一、模型层(models)(一)模型类的定义 类属性命名限制  不能是python的保留关键字 不允许使用连续的下划线 定义属性时需要指定字段类型，通过字段类型的参数指定选项   常用字段类型：    类型 描述    AutoField 自动增长的IntegerField，通常不用指定   BooleanField 布尔字段，值为True或False   NullBooleanField 支持N">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-07-26T08:57:35.597Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Django框架介绍">
+<meta name="twitter:description" content="一、模型层(models)(一)模型类的定义 类属性命名限制  不能是python的保留关键字 不允许使用连续的下划线 定义属性时需要指定字段类型，通过字段类型的参数指定选项   常用字段类型：    类型 描述    AutoField 自动增长的IntegerField，通常不用指定   BooleanField 布尔字段，值为True或False   NullBooleanField 支持N">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/07/26/Django框架介绍/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  
+  <title>Django框架介绍 | Freezz的博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Freezz的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/26/Django框架介绍/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Freezz">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Freezz的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Django框架介绍
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-26 16:28:09 / 修改时间：16:57:35" itemprop="dateCreated datePublished" datetime="2019-07-26T16:28:09+08:00">2019-07-26</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/web后端/" itemprop="url" rel="index"><span itemprop="name">web后端</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+                 阅读次数： 
+                <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+            </span>
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、模型层-models"><a href="#一、模型层-models" class="headerlink" title="一、模型层(models)"></a>一、模型层(models)</h2><h3 id="一-模型类的定义"><a href="#一-模型类的定义" class="headerlink" title="(一)模型类的定义"></a>(一)模型类的定义</h3><ol>
+<li><p>类属性命名限制</p>
+<ul>
+<li>不能是python的保留关键字</li>
+<li>不允许使用连续的下划线</li>
+<li>定义属性时需要指定字段类型，通过字段类型的参数指定选项</li>
+</ul>
+</li>
+<li><p>常用字段类型：</p>
+<table>
+<thead>
+<tr>
+<th align="left">类型</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">AutoField</td>
+<td align="left">自动增长的IntegerField，通常不用指定</td>
+</tr>
+<tr>
+<td align="left">BooleanField</td>
+<td align="left">布尔字段，值为True或False</td>
+</tr>
+<tr>
+<td align="left">NullBooleanField</td>
+<td align="left">支持Null、True、False三种值</td>
+</tr>
+<tr>
+<td align="left">CharField(max_length=最大长度)</td>
+<td align="left">字符串，max_length表示最大字符个数</td>
+</tr>
+<tr>
+<td align="left">TextField</td>
+<td align="left">大文本字段，一般超过4000个字符时使用</td>
+</tr>
+<tr>
+<td align="left">IntegerField</td>
+<td align="left">整数</td>
+</tr>
+<tr>
+<td align="left">DecimalField(max_digits=None,decimal_places=None)</td>
+<td align="left">十进制浮点数，max_digits表示总位数，decimal_places表示小数位数</td>
+</tr>
+<tr>
+<td align="left">FloatField</td>
+<td align="left">浮点数，参数同上</td>
+</tr>
+<tr>
+<td align="left">DateField(auto_now=False,auto_now_add=False)</td>
+<td align="left">auto_now表示每次保存对象时自动设置该字段为当前时间，默认为false；auto_now_add表示当对象第一次创建时自动设置当前时间，默认为false</td>
+</tr>
+<tr>
+<td align="left">TimeField</td>
+<td align="left">时间，参数同DateField</td>
+</tr>
+<tr>
+<td align="left">DateTimeField</td>
+<td align="left">日期时间，参数同DateField</td>
+</tr>
+<tr>
+<td align="left">FileField</td>
+<td align="left">上传文件字段</td>
+</tr>
+<tr>
+<td align="left">ImageField</td>
+<td align="left">继承于FileField，对上传的内容进行校验，确保是有效图片</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>选项：</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项名</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">defaut</td>
+<td align="left">默认值，设置默认值</td>
+</tr>
+<tr>
+<td align="left">primary_key</td>
+<td align="left">若为True，则该字段会成为模型的主键字段，默认值是False，一般作为AutoField的选项使用</td>
+</tr>
+<tr>
+<td align="left">unique</td>
+<td align="left">如果为True，这个字段再表中必须有唯一值，默认值是False</td>
+</tr>
+<tr>
+<td align="left">db_index</td>
+<td align="left">若为True，则再表中会为此字段创建索引，默认值是False</td>
+</tr>
+<tr>
+<td align="left">db_column</td>
+<td align="left">字段的名称，如果未指定，则使用属性的名称</td>
+</tr>
+<tr>
+<td align="left">null</td>
+<td align="left">如果为True，表示允许为空，默认值是False</td>
+</tr>
+<tr>
+<td align="left">blank</td>
+<td align="left">如果为True，则该字段允许为空白，默认值是False</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<h3 id="二-模型类的增、删、改、查操作"><a href="#二-模型类的增、删、改、查操作" class="headerlink" title="(二)模型类的增、删、改、查操作"></a>(二)模型类的增、删、改、查操作</h3><ol>
+<li><p>查询函数</p>
+<ul>
+<li><p>通过<strong>模型类.objects</strong>属性可以调用以下函数，实现对模型类对应的数据表的查询。</p>
+<table>
+<thead>
+<tr>
+<th align="left">函数名</th>
+<th align="left">功能</th>
+<th align="left">返回值</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">get</td>
+<td align="left">返回表中满足条件的一条且只能有一条数据。</td>
+<td align="left">返回值是一个模型对象。</td>
+<td align="left">如果查到多条数据，则抛出异常MultipleObjectReturned；查询不到数据，则抛异常DoesNotExist。</td>
+</tr>
+<tr>
+<td align="left">all</td>
+<td align="left">返回模型类对应表格中的所有数据。</td>
+<td align="left">返回值是QuerySet类型</td>
+<td align="left">查询集</td>
+</tr>
+<tr>
+<td align="left">filter</td>
+<td align="left">返回满足条件的数据。</td>
+<td align="left">返回值是QuerySet类型</td>
+<td align="left">参数写查询条件。</td>
+</tr>
+<tr>
+<td align="left">exclude</td>
+<td align="left">返回不满足条件的数据。</td>
+<td align="left">返回值是QuerySet类型</td>
+<td align="left">参数写查询条件。</td>
+</tr>
+<tr>
+<td align="left">order_by</td>
+<td align="left">对查询结果进行排序。</td>
+<td align="left">返回值是QuerySet类型</td>
+<td align="left">参数中写根据哪些字段进行排序 ‘类属性’–升序 ‘-类属性’–降序</td>
+</tr>
+</tbody></table>
+<p>方法的查询条件格式：</p>
+<p>  模型类属性名.__条件名 = 值</p>
+<p>  a) 判等 条件名：exact<br>  b) 模糊查询 </p>
+<pre><code>包含 条件名：contains
+以XX开头 条件名：startwith
+以XX结尾 条件名：endwith</code></pre><p>  c) 空查询 条件名：isnull<br>  d) 范围查询 条件名：in<br>  e) 比较查询 条件名：gt(大于) lt(小于) gte(大于等于) lte(小于等于)<br>  f) 日期查询 条件名：year month day</p>
+</li>
+</ul>
+</li>
+<li><p>Q对象</p>
+<pre><code>作用：用于查询条件之间的逻辑关系。not and or，可以对Q对象进行&amp;|~操作。
+
+使用之前需要先导入：
+    form django.db.models import Q</code></pre></li>
+<li><p>F对象</p>
+<pre><code>作用：用于类属性之间的比较。
+
+使用之前需要先导入：
+    from django.db.models import F</code></pre></li>
+<li><p>聚合函数</p>
+<pre><code>作用：对查询结果进行聚合操作。
+
+aggregate：调用这个函数来使用聚合，返回值是一个字典。
+
+使用前先导入聚合类：
+    from django.db.models import Sum,Count,Max,Min,Avg
+
+返回的字典形式：
+        {&apos;属性名__count&apos;:函数返回值}</code></pre></li>
+<li><p>查询集</p>
+<p> 查询集特性：</p>
+<pre><code>1) 惰性查询：只有再实际使用查询集中的数据的时候才会发生对数据库的真正查询。
+2) 缓存：当使用的是同一个查询集时，第一次的时候会发生实际数据库的查询，然后把结果缓存起来，之后再使用这个查询集时，使用的是缓存中的结果。
+3) 可进行索引、切片操作。</code></pre></li>
+<li><p>模型类关系</p>
+<pre><code>1) 一对多关系
+    models.ForeignKey() 定义在“多”的类中
+2) 多对多关系
+    models.ManyToManyField()
+3) 一对一关系
+    models.OneToOneField()</code></pre></li>
+<li><p>关联查询(一对多关系)</p>
+<ol>
+<li><p>通过对象来查询</p>
+<pre><code>由“一”类的对象查询“多”类的时候：
+    “一”类的对象.“多”类名小写_set.all() 
+由“多”类的对象查询“一”类的时候：
+    “多”类的对象.关联属性 #查询“多”类的对象对应的“一”类的对象</code></pre></li>
+<li><p>通过模型类来查询</p>
+<pre><code>通过“多”类的条件查询“一”类的数据：
+    “一”类名.objects.filter(“多”类名小写__“多”类属性名__条件名)
+通过“一”类的条件查询“多”类的数据：
+    “多”类名.objects.filter(关联属性__“一”类属性名__条件名)</code></pre></li>
+</ol>
+</li>
+</ol>
+<h2 id="二、视图-views"><a href="#二、视图-views" class="headerlink" title="二、视图(views)"></a>二、视图(views)</h2><h3 id="一-视图的功能"><a href="#一-视图的功能" class="headerlink" title="(一)视图的功能"></a>(一)视图的功能</h3><pre><code>接受请求，进行处理，与M和T进行交互，返回应答。
+返回html内容HttpResponse，也可能重定向redirect，还可能是JsonResponse。</code></pre><h3 id="二-视图函数的使用"><a href="#二-视图函数的使用" class="headerlink" title="(二)视图函数的使用"></a>(二)视图函数的使用</h3><pre><code>1) 定义视图函数
+    request参数必须有，是一个HttpRequest类型对象，参数名可以变化。
+2) 配置url
+    建立url和视图函数之间的对应关系</code></pre><h3 id="三-错误视图"><a href="#三-错误视图" class="headerlink" title="(三)错误视图"></a>(三)错误视图</h3><pre><code>404：找不到页面，关闭调试模式之后，默认会显示一个标准的错误页面，如果要显示自定义的页面，则需要在templates目录下自定义一个404.html文件。
+    a) url没用配置
+    b) url配置错误
+500：服务器端的错误
+    a) 视图出错
+网站开发完成需要关闭调试模式，在settings.py文件中：
+    DEBUG=False
+    ALLOWED_HOST=[&apos;*&apos;]</code></pre><h3 id="四-与前端表单的交互"><a href="#四-与前端表单的交互" class="headerlink" title="(四)与前端表单的交互"></a>(四)与前端表单的交互</h3><pre><code>提交表单的方式分为两种：a)POST b)GET
+request.method方法可以返回请求方式的字符串
+
+1) 获取POST请求中的参数：
+    request.POST.get(&apos;参数名&apos;)
+2) 获取GET请求中的参数：
+    request.GET.get(&apos;参数名&apos;)</code></pre><h3 id="五-设置cookie信息"><a href="#五-设置cookie信息" class="headerlink" title="(五)设置cookie信息"></a>(五)设置cookie信息</h3><pre><code>设置cookie：
+    需要一个HttpResponse类的对象或是它的子类
+    通过set_cookie方法来设置。
+    max_age=second,expirse=datetime来设置过期时间
+
+浏览器发给服务器的cookie信息，在request对象的COOKIES属性中的字典来保存</code></pre><h2 id="三、模板-template"><a href="#三、模板-template" class="headerlink" title="三、模板(template)"></a>三、模板(template)</h2><h3 id="一-模板的功能"><a href="#一-模板的功能" class="headerlink" title="(一)模板的功能"></a>(一)模板的功能</h3><pre><code>产生html，控制页面上展示的内容。
+模板文件包含两部分内容：
+1) 静态内容：css，js，html
+2) 动态内容：用于动态地产生一些网页内容，通过模板语言来产生。</code></pre><h3 id="二-模板文件的使用"><a href="#二-模板文件的使用" class="headerlink" title="(二)模板文件的使用"></a>(二)模板文件的使用</h3><pre><code>a) 加载模板文件：loader.get_template
+   获取模板文件的内容，产生模板对象。
+b) 定义模板上下文 RequsetContext
+   给模板文件传递数据。
+c) 模板渲染产生html页面内容 render
+   用传递的数据替换相应的变量，产生替换后的html内容</code></pre><h3 id="三-模板语言"><a href="#三-模板语言" class="headerlink" title="(三)模板语言"></a>(三)模板语言</h3><ol>
+<li><p>模板变量</p>
+<pre><code>模板变量名是由数字、字母、下划线和点组成的，不能以下划线开头。
+使用模板变量：{{ 模板变量名 }}</code></pre></li>
+<li><p>模板标签</p>
+</li>
+</ol>
+<figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="template-tag">&#123;% 代码段 %&#125;</span></span><br><span class="line"></span><br><span class="line">for循环：</span><br><span class="line">    <span class="template-tag">&#123;% <span class="name"><span class="name">for</span></span> x <span class="keyword">in</span> 列表 %&#125;</span></span><br><span class="line">    # 列表不为空时执行</span><br><span class="line">    <span class="template-tag">&#123;% <span class="name"><span class="name">empty</span></span> %&#125;</span></span><br><span class="line">    # 列表为空时执行</span><br><span class="line">    <span class="template-tag">&#123;% <span class="name"><span class="name">endfor</span></span> %&#125;</span></span><br><span class="line">    可以通过<span class="template-variable">&#123;&#123; forloop.counter &#125;&#125;</span>得到for循环遍历到了第几次</span><br><span class="line"></span><br><span class="line">if条件：</span><br><span class="line">    <span class="template-tag">&#123;% <span class="name"><span class="name">if</span></span> 条件 %&#125;</span></span><br><span class="line">    <span class="template-tag">&#123;% <span class="name"><span class="name">elif</span></span> 条件 %&#125;</span></span><br><span class="line">    <span class="template-tag">&#123;% <span class="name"><span class="name">else</span></span> %&#125;</span></span><br><span class="line">    <span class="template-tag">&#123;% <span class="name"><span class="name">endif</span></span> %&#125;</span></span><br><span class="line">关系比较操作符：&gt; &lt; &gt;= &lt;= == !=</span><br><span class="line">逻辑运算：not and or</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>过滤器</p>
+<pre><code>过滤器用于对模板变量进行操作。
+date：改变日期的显示格式
+length：求长度。(字符串，列表，元组，字典长度)
+default：设置模板变量的默认值。
+格式：模板变量 | 过滤器：参数
+过滤器可以自定义</code></pre><p> 参考：<a href="https://docs.djangoproject.com/zh-hans/2.1/ref/templates/language/" target="_blank" rel="noopener">https://docs.djangoproject.com/zh-hans/2.1/ref/templates/language/</a></p>
+</li>
+<li><p>html转义</p>
+<p> 在模板上下文中的html标记默认是会被转义的。</p>
+<pre><code>小于号 &lt; 转换为 &amp;lt;
+大于号 &gt; 转换为 &amp;gt;
+单引号 &apos; 转换为 &amp;#39;
+双引号 &quot; 转换为 &amp;quot;
+与符号 &amp; 转换为 &amp;amp;</code></pre><p> 要关闭模板上下文字符串的转义可以使用：</p>
+ <figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="template-variable">&#123;&#123; 模板变量|<span class="name">safe</span> &#125;&#125;</span></span><br><span class="line">或</span><br><span class="line"><span class="template-tag">&#123;% <span class="name"><span class="name">autoescape</span></span> off %&#125;</span></span><br><span class="line">    模板语言代码</span><br><span class="line"><span class="template-tag">&#123;% <span class="name"><span class="name">endautoescape</span></span> %&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>url反向解析</p>
+<p> 当某一个url配置的地址发生变化时，页面上使用反向解析生成地址的位置不需要发生变化。</p>
+ <figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">在模板文件中使用时，格式如下：</span><br><span class="line"><span class="template-tag">&#123;% <span class="name"><span class="name">url</span></span> 'namespace名字:name' %&#125;</span></span><br><span class="line">带位置参数：</span><br><span class="line"><span class="template-tag">&#123;% <span class="name"><span class="name">url</span></span> 'namespace名字:name' 参数 %&#125;</span></span><br><span class="line">带关键字参数：</span><br><span class="line"><span class="template-tag">&#123;% <span class="name"><span class="name">url</span></span> 'namespace名字:name' 关键字参数 %&#125;</span></span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">在重定向的时候使用反向解析：</span><br><span class="line"><span class="keyword">from</span> django.core.urlresolvers <span class="keyword">import</span> reverse</span><br><span class="line">无参数：</span><br><span class="line">    url = reverse(<span class="string">'namespace名字:name名字'</span>)</span><br><span class="line">位置参数：</span><br><span class="line">    url = reverse(<span class="string">'namespace名字:name名字'</span>, args=位置参数元组)</span><br><span class="line">关键字参数：</span><br><span class="line">    url = reverse(<span class="string">'namespace名字:name名字'</span>, kwargs=字典)</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/Django/" rel="tag"># Django</a>
+          
+            <a href="/tags/后端开发/" rel="tag"># 后端开发</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/26/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  
+    <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Freezz">
+  
+  <p class="site-author-name" itemprop="name">Freezz</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+
+
+  <nav class="site-state motion-element">
+    
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+
+
+
+
+  <div class="links-of-author motion-element">
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/Freezzin26" title="GitHub &rarr; https://github.com/Freezzin26" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+  </div>
+
+
+
+
+
+
+
+          
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、模型层-models"><span class="nav-number">1.</span> <span class="nav-text">一、模型层(models)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一-模型类的定义"><span class="nav-number">1.1.</span> <span class="nav-text">(一)模型类的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二-模型类的增、删、改、查操作"><span class="nav-number">1.2.</span> <span class="nav-text">(二)模型类的增、删、改、查操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、视图-views"><span class="nav-number">2.</span> <span class="nav-text">二、视图(views)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一-视图的功能"><span class="nav-number">2.1.</span> <span class="nav-text">(一)视图的功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二-视图函数的使用"><span class="nav-number">2.2.</span> <span class="nav-text">(二)视图函数的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三-错误视图"><span class="nav-number">2.3.</span> <span class="nav-text">(三)错误视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四-与前端表单的交互"><span class="nav-number">2.4.</span> <span class="nav-text">(四)与前端表单的交互</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五-设置cookie信息"><span class="nav-number">2.5.</span> <span class="nav-text">(五)设置cookie信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、模板-template"><span class="nav-number">3.</span> <span class="nav-text">三、模板(template)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一-模板的功能"><span class="nav-number">3.1.</span> <span class="nav-text">(一)模板的功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二-模板文件的使用"><span class="nav-number">3.2.</span> <span class="nav-text">(二)模板文件的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三-模板语言"><span class="nav-number">3.3.</span> <span class="nav-text">(三)模板语言</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Freezz</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.2.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// GET RESPONSIVE HEIGHT PASSED FROM IFRAME
+
+window.addEventListener("message", function(e) {
+  var data = e.data;
+  if ((typeof data === 'string') && (data.indexOf('ciu_embed') > -1)) {
+    var featureID = data.split(':')[1];
+    var height = data.split(':')[2];
+    $(`iframe[data-feature=${featureID}]`).height(parseInt(height) + 30);
+  }
+}, false);
+</script>
+
+
+
+
+
+
+
+
+  
+
+</body>
+</html>
