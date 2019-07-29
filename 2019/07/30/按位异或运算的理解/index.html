@@ -94,13 +94,18 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Freezz的博客">
-<meta property="og:url" content="http://yoursite.com/archives/2019/07/index.html">
+  <meta name="description" content="位运算   运算符 结果(0、0) 结果(0、1) 结果(1、0) 结果(1、1)    与(&amp;amp;) 0 &amp;amp; 0 = 0 0 &amp;amp; 1 = 0 1 &amp;amp; 0 = 0 1 &amp;amp; 1 = 1   或(&amp;#124;) 0 &amp;#124; 0 = 0 0 &amp;#124; 1 = 1 1 &amp;#124; 0 = 1 1 &amp;#124; 1 = 1   异或(^) 0 ^ 0 = 0">
+<meta name="keywords" content="C#,位运算">
+<meta property="og:type" content="article">
+<meta property="og:title" content="按位异或运算的理解">
+<meta property="og:url" content="http://yoursite.com/2019/07/30/按位异或运算的理解/index.html">
 <meta property="og:site_name" content="Freezz的博客">
+<meta property="og:description" content="位运算   运算符 结果(0、0) 结果(0、1) 结果(1、0) 结果(1、1)    与(&amp;amp;) 0 &amp;amp; 0 = 0 0 &amp;amp; 1 = 0 1 &amp;amp; 0 = 0 1 &amp;amp; 1 = 1   或(&amp;#124;) 0 &amp;#124; 0 = 0 0 &amp;#124; 1 = 1 1 &amp;#124; 0 = 1 1 &amp;#124; 1 = 1   异或(^) 0 ^ 0 = 0">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-07-29T16:24:58.367Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Freezz的博客">
+<meta name="twitter:title" content="按位异或运算的理解">
+<meta name="twitter:description" content="位运算   运算符 结果(0、0) 结果(0、1) 结果(1、0) 结果(1、1)    与(&amp;amp;) 0 &amp;amp; 0 = 0 0 &amp;amp; 1 = 0 1 &amp;amp; 0 = 0 1 &amp;amp; 1 = 1   或(&amp;#124;) 0 &amp;#124; 0 = 0 0 &amp;#124; 1 = 1 1 &amp;#124; 0 = 1 1 &amp;#124; 1 = 1   异或(^) 0 ^ 0 = 0">
 
 
 
@@ -108,7 +113,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/archives/2019/07/">
+  <link rel="canonical" href="http://yoursite.com/2019/07/30/按位异或运算的理解/">
 
 
 
@@ -119,7 +124,7 @@
 </script>
 
   
-  <title>归档 | Freezz的博客</title>
+  <title>按位异或运算的理解 | Freezz的博客</title>
   
 
 
@@ -167,7 +172,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -253,7 +258,7 @@
         
         
           
-          <li class="menu-item menu-item-archives menu-item-active">
+          <li class="menu-item menu-item-archives">
 
     
     
@@ -273,25 +278,6 @@
 
   
     
-
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
 
   
 
@@ -313,148 +299,282 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
+  <div id="posts" class="posts-expand">
       
-      <span class="archive-page-counter">
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/30/按位异或运算的理解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Freezz">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Freezz的博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">按位异或运算的理解
+
+              
+            
+          </h1>
         
+
+        <div class="post-meta">
+
           
-        
-        嗯..! 目前共计 3 篇日志。 继续努力。
-      </span>
-      
-
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
+          
 
-        
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+              
+                
+              
 
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/07/30/按位异或运算的理解/" itemprop="url">
+              <time title="创建时间：2019-07-30 00:22:25 / 修改时间：00:24:58" itemprop="dateCreated datePublished" datetime="2019-07-30T00:22:25+08:00">2019-07-30</time>
+            </span>
+          
+
+          
             
-              <span itemprop="name">按位异或运算的理解</span>
+
             
-          </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-30T00:22:25+08:00" content="2019-07-30">
-          07-30
-        </time>
-      </div>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习随笔/" itemprop="url" rel="index"><span itemprop="name">学习随笔</span></a></span>
 
-    </header>
-  </article>
+                
+                
+              
+            </span>
+          
 
+          
+          
 
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+                 阅读次数： 
+                <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+            </span>
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/07/26/Django框架介绍/" itemprop="url">
-            
-              <span itemprop="name">Django框架介绍</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-26T16:28:09+08:00" content="2019-07-26">
-          07-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
+      
+        <h2 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h2><table>
+<thead>
+<tr>
+<th align="left">运算符</th>
+<th align="left">结果(0、0)</th>
+<th align="left">结果(0、1)</th>
+<th align="left">结果(1、0)</th>
+<th align="left">结果(1、1)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">与(&amp;)</td>
+<td align="left">0 &amp; 0 = 0</td>
+<td align="left">0 &amp; 1 = 0</td>
+<td align="left">1 &amp; 0 = 0</td>
+<td align="left">1 &amp; 1 = 1</td>
+</tr>
+<tr>
+<td align="left">或(&#124;)</td>
+<td align="left">0 &#124; 0 = 0</td>
+<td align="left">0 &#124; 1 = 1</td>
+<td align="left">1 &#124; 0 = 1</td>
+<td align="left">1 &#124; 1 = 1</td>
+</tr>
+<tr>
+<td align="left">异或(^)</td>
+<td align="left">0 ^ 0 = 0</td>
+<td align="left">0 ^ 1 = 1</td>
+<td align="left">1 ^ 0 = 1</td>
+<td align="left">1 ^ 1 = 0</td>
+</tr>
+</tbody></table>
+<p><strong>左移运算符：</strong><br>左移运算符m&lt;&lt;n表示把m左移n位，左移n位的时候，最左边的n位将被丢弃，同时在最右边补上n个0。</p>
+<pre><code>00001010 &lt;&lt; 2 = 00101000
+10001010 &lt;&lt; 3 = 01010000</code></pre><p><strong>右移运算符：</strong><br>右移运算符m&gt;&gt;n表示把m右移n位。右移n位的时候，最右边的n位将被丢弃。但右移时处理最左边位的情形要稍微复杂一点。这里要特别注意，如果数字是一个无符号数值，则用0填补最左边的n位。如果数字是一个有符号数值，则用数字的符号位填补最左边的n位。也就是说如果数字原先是一个正数，则右移之后再最左边补n个0；如果数字原先是负数，则右移之后在最左边补n个1。</p>
+<pre><code>00001010 &gt;&gt; 2 = 00000010
+10001010 &gt;&gt; 3 = 11110001 (负数)</code></pre><h2 id="异或运算的运用-–-判断乘、除运算结果的符号"><a href="#异或运算的运用-–-判断乘、除运算结果的符号" class="headerlink" title="异或运算的运用 – 判断乘、除运算结果的符号"></a>异或运算的运用 – 判断乘、除运算结果的符号</h2><ol>
+<li><p>计算机中数的二进制表示方法</p>
+<p> 在计算机中，正数的二进制表示为本身的二进制，而负数的二进制为该数绝对值的二进制补码，所以正数的二进制表示为它的原码，而负数的二进制表示为它的补码。</p>
+<pre><code>例子：
+5   原码：00000101
+    二进制表示：00000101
+-5  原码：10000101
+    反码：01111010
+    补码：01111011
+    二进制表示：01111011</code></pre></li>
+<li><p>运算过程</p>
+<pre><code>5 / -5
+5 --&gt; 00000101
+-5 --&gt; 01111011
+运算：
+    00000101
+^   01111011
+-------------
+    01111110
+通过计算补码的逆运算可得：
+01111110 --&gt; 1000010
+最终结果是-2
 
-        
-        
+5 / 5
+5 --&gt; 00000101
+运算：
+    00000101
+^   00000101
+-------------
+    00000000
+最终结果是0
 
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/07/26/hello-world/" itemprop="url">
-            
-              <span itemprop="name">Hello World</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-26T12:17:34+08:00" content="2019-07-26">
-          07-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+4 / 2
+4 --&gt; 00000100
+2 --&gt; 00000010
+运算：
+    00000100
+^   00000010
+-------------
+    00000110
+最终结果是6</code></pre></li>
+<li><p>结论</p>
+<p> 经过多次计算，最后可以得出结论：<br> <strong>当两数符号相同时，异或运算后的结果大于等于0</strong><br> <strong>当两数符号不同时，异或运算后的结果小于0</strong></p>
+</li>
+</ol>
 
       
-
     </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C#</a>
+          
+            <a href="/tags/位运算/" rel="tag"># 位运算</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/26/Django框架介绍/" rel="next" title="Django框架介绍">
+                <i class="fa fa-chevron-left"></i> Django框架介绍
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
-
+  </div>
 
 
           </div>
           
+  
+
+
 
         </div>
         
@@ -474,8 +594,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
 
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -580,6 +709,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#位运算"><span class="nav-number">1.</span> <span class="nav-text">位运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异或运算的运用-–-判断乘、除运算结果的符号"><span class="nav-number">2.</span> <span class="nav-text">异或运算的运用 – 判断乘、除运算结果的符号</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -737,6 +883,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
 
   <script src="/js/next-boot.js?v=7.2.0"></script>
 
